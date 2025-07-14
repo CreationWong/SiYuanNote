@@ -211,16 +211,6 @@ export const about = {
                 openByMobile(response.data.zip);
             });
         });
-        const updateElement = about.element.querySelector("#checkUpdateBtn");
-        updateElement?.addEventListener("click", () => {
-            if (updateElement.firstElementChild.classList.contains("fn__rotate")) {
-                return;
-            }
-            updateElement.innerHTML = `<svg class="fn__rotate"><use xlink:href="#iconRefresh"></use></svg>${window.siyuan.languages.checkUpdate}`;
-            fetchPost("/api/system/checkUpdate", {showMsg: true}, () => {
-                updateElement.innerHTML = `<svg><use xlink:href="#iconRefresh"></use></svg>${window.siyuan.languages.checkUpdate}`;
-            });
-        });
         about.element.querySelectorAll('[data-type="open"]').forEach(item => {
             item.addEventListener("click", () => {
                 const url = item.getAttribute("data-url");
@@ -316,12 +306,6 @@ export const about = {
         lockScreenModeElement.addEventListener("change", () => {
             fetchPost("/api/system/setFollowSystemLockScreen", {lockScreenMode: lockScreenModeElement.checked ? 1 : 0}, () => {
                 window.siyuan.config.system.lockScreenMode = lockScreenModeElement.checked ? 1 : 0;
-            });
-        });
-        const downloadInstallPkgElement = about.element.querySelector("#downloadInstallPkg") as HTMLInputElement;
-        downloadInstallPkgElement.addEventListener("change", () => {
-            fetchPost("/api/system/setDownloadInstallPkg", {downloadInstallPkg: downloadInstallPkgElement.checked}, () => {
-                window.siyuan.config.system.downloadInstallPkg = downloadInstallPkgElement.checked;
             });
         });
         /// #if !BROWSER
