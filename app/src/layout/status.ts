@@ -72,17 +72,17 @@ export const initStatus = (isWindow = false) => {
                         mountHelp();
                     }
                 }).element);
-                window.siyuan.menus.menu.append(new MenuItem({
-                    label: window.siyuan.languages.feedback,
-                    icon: "iconFeedback",
-                    click: () => {
-                        if ("zh_CN" === window.siyuan.config.lang || "zh_CHT" === window.siyuan.config.lang) {
-                            window.open("https://ld246.com/article/1649901726096");
-                        } else {
-                            window.open("https://liuyun.io/article/1686530886208");
-                        }
-                    }
-                }).element);
+                // window.siyuan.menus.menu.append(new MenuItem({
+                //     label: window.siyuan.languages.feedback,
+                //     icon: "iconFeedback",
+                //     click: () => {
+                //         if ("zh_CN" === window.siyuan.config.lang || "zh_CHT" === window.siyuan.config.lang) {
+                //             window.open("https://ld246.com/article/1649901726096");
+                //         } else {
+                //             window.open("https://liuyun.io/article/1686530886208");
+                //         }
+                //     }
+                // }).element);
                 /// #if !BROWSER
                 window.siyuan.menus.menu.append(new MenuItem({
                     label: window.siyuan.languages.debug,
