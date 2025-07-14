@@ -10,34 +10,8 @@ import {isKernelInMobile} from "../util/functions";
 
 const renderProvider = (provider: number) => {
     if (provider === 0) {
-        if (needSubscribe("")) {
-            return `<div class="b3-label b3-label--inner">${window.siyuan.config.system.container === "ios" ? window.siyuan.languages._kernel[122] : window.siyuan.languages._kernel[29].replaceAll("${accountServer}", getCloudURL(""))}</div>
-<div class="b3-label b3-label--inner">
-    ${window.siyuan.languages.cloudIntro1}
-    <div class="b3-label__text">
-        <ul class="fn__list">
-            <li>${window.siyuan.languages.cloudIntro2}</li>
-            <li>${window.siyuan.languages.cloudIntro3}</li>
-            <li>${window.siyuan.languages.cloudIntro4}</li>
-            <li>${window.siyuan.languages.cloudIntro5}</li>
-            <li>${window.siyuan.languages.cloudIntro6}</li>
-            <li>${window.siyuan.languages.cloudIntro7}</li>
-            <li>${window.siyuan.languages.cloudIntro8}</li>
-        </ul>
-    </div>
-</div>
-<div class="b3-label b3-label--inner">
-    ${window.siyuan.languages.cloudIntro9}
-    <div class="b3-label__text">
-        <ul style="padding-left: 2em">
-            <li>${window.siyuan.languages.cloudIntro10}</li>
-            <li>${window.siyuan.languages.cloudIntro11}</li>
-        </ul>
-    </div>
-</div>`;
-        }
         return `<div class="b3-label b3-label--inner">
-    ${window.siyuan.languages.syncOfficialProviderIntro}
+    
 </div>`;
     }
     if (provider === 2) {
@@ -117,7 +91,9 @@ const renderProvider = (provider: number) => {
         <svg><use xlink:href="#iconUpload"></use></svg>${window.siyuan.languages.export}
     </button>
 </div>`;
-    } else if (provider === 3) {
+    }
+
+    if (provider === 3) {
         return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderWebDAVIntro}
     <div class="fn__hr"></div>
@@ -176,7 +152,9 @@ const renderProvider = (provider: number) => {
         <svg><use xlink:href="#iconUpload"></use></svg>${window.siyuan.languages.export}
     </button>
 </div>`;
-    } else if (provider === 4) {
+    }
+
+    if (provider === 4) {
         if (isKernelInMobile()) {
             return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderLocalIntro}
@@ -414,7 +392,7 @@ export const repos = {
     </div>
     <span class="fn__space"></span>
     <select id="syncProvider" class="b3-select fn__flex-center fn__size200">
-        <option value="0" ${window.siyuan.config.sync.provider === 0 ? "selected" : ""}>SiYuan</option>
+        <option value="0" ${window.siyuan.config.sync.provider === 0 ? "selected" : ""}></option>
         <option value="2" ${window.siyuan.config.sync.provider === 2 ? "selected" : ""}>S3</option>
         <option value="3" ${window.siyuan.config.sync.provider === 3 ? "selected" : ""}>WebDAV</option>
         <option value="4" ${window.siyuan.config.sync.provider === 4 ? "selected" : ""}>${window.siyuan.languages.localFileSystem}</option>
