@@ -1,8 +1,8 @@
 productName: "SiYuan"
-appId: "org.b3log.siyuan"
+appId: "org.siyuan"
 asar: false
 compression: "store"
-copyright: "© 2024 Yunnan Liandi Technology Co., Ltd."
+copyright: "© 2024 SiYuan"
 artifactName: "siyuan-${version}-${os}.${ext}"
 extraMetadata:
   main: "electron/main.js"
