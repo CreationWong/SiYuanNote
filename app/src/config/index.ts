@@ -8,7 +8,6 @@ import {image} from "./image";
 import {initConfigSearch} from "./search";
 import {fileTree} from "./fileTree";
 import {exportConfig} from "./exportConfig";
-import {account} from "./account";
 import {repos} from "./repos";
 import {keymap} from "./keymap";
 import {bazaar} from "./bazaar";
@@ -63,11 +62,6 @@ export const genItemPanel = (type: string, containerElement: Element, app: App) 
             bazaar.element = containerElement;
             containerElement.innerHTML = bazaar.genHTML();
             bazaar.bindEvent(app);
-            break;
-        case "account":
-            containerElement.innerHTML = account.genHTML();
-            account.element = containerElement;
-            account.bindEvent(account.element);
             break;
         case "repos":
             containerElement.innerHTML = repos.genHTML();
