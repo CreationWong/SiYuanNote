@@ -18,8 +18,6 @@ const renderProvider = (provider: number) => {
         return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderS3Intro}
     <div class="fn__hr"></div>
-    <em>${window.siyuan.languages.proFeature}</em>
-    <div class="fn__hr"></div>
     ${window.siyuan.languages.syncThirdPartyProviderTip}
 </div>
 <div class="b3-label b3-label--inner fn__flex">
@@ -97,8 +95,6 @@ const renderProvider = (provider: number) => {
         return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderWebDAVIntro}
     <div class="fn__hr"></div>
-    <em>${window.siyuan.languages.proFeature}</em>
-    <div class="fn__hr"></div>
     ${window.siyuan.languages.syncThirdPartyProviderTip}
 </div>
 <div class="b3-label b3-label--inner fn__flex">
@@ -159,15 +155,12 @@ const renderProvider = (provider: number) => {
             return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderLocalIntro}
     <div class="fn__hr"></div>
-    <em>${window.siyuan.languages.proFeature}</em>
-    <div class="fn__hr"></div>
     ${window.siyuan.languages.deviceNotSupport}
 </div>`;
         }
         return `<div class="b3-label b3-label--inner">
     ${window.siyuan.languages.syncThirdPartyProviderLocalIntro}
     <div class="fn__hr"></div>
-    <em>${window.siyuan.languages.proFeature}</em>
 </div>
 <div class="b3-label b3-label--inner fn__flex">
     <div class="fn__flex-center fn__size200">Endpoint</div>
