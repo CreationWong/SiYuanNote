@@ -167,6 +167,12 @@ export const about = {
         <button id="aboutConfirm" class="b3-button fn__size200 b3-button--outline">${window.siyuan.languages.confirm}</button>
     </div>
 </div>
+<div class="fn__flex b3-label config__item">
+    <div class="fn__flex-1">
+        ${window.siyuan.languages.currentVer} v${Constants.SIYUAN_VERSION}
+        <span id="isInsider"></span>
+    </div>
+</div>
 <div class="b3-label">
     <div class="config-about__logo">
         <img src="/stage/icon.png">
