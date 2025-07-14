@@ -17,25 +17,6 @@ import {useShell} from "../util/pathName";
 export const about = {
     element: undefined as Element,
     genHTML: () => {
-        const checkUpdateHTML = window.siyuan.config.system.isMicrosoftStore ? `<div class="fn__flex b3-label config__item">
-    <div class="fn__flex-1">
-        ${window.siyuan.languages.currentVer} v${Constants.SIYUAN_VERSION}
-        <span id="isInsider"></span>
-        <div class="b3-label__text">${window.siyuan.languages.isMsStoreVerTip}</div>
-    </div>
-</div>` : `<div class="fn__flex b3-label config__item">
-    <div class="fn__flex-1">
-        ${window.siyuan.languages.currentVer} v${Constants.SIYUAN_VERSION}
-        <span id="isInsider"></span>
-        <div class="b3-label__text">${window.siyuan.languages.downloadLatestVer}</div>
-    </div>
-    <div class="fn__space"></div>
-    <div class="fn__flex-center fn__size200 config__item-line">
-        <button id="checkUpdateBtn" class="b3-button b3-button--outline fn__block">
-            <svg><use xlink:href="#iconRefresh"></use></svg>${window.siyuan.languages.checkUpdate}
-        </button>
-    </div>
-</div>`;
         return `<div class="fn__flex b3-label config__item${isBrowser() || window.siyuan.config.system.isMicrosoftStore || "std" !== window.siyuan.config.system.container || "linux" === window.siyuan.config.system.os ? " fn__none" : ""}">
     <div class="fn__flex-1">
         ${window.siyuan.languages.autoLaunch}
@@ -48,14 +29,6 @@ export const about = {
       ${isMac() ? "" : `<option value="2" ${window.siyuan.config.system.autoLaunch2 === 2 ? "selected" : ""}>${window.siyuan.languages.autoLaunchMode2}</option>`}
     </select>    
 </div>
-<label class="fn__flex b3-label${isBrowser() || window.siyuan.config.system.isMicrosoftStore || window.siyuan.config.system.container !== "std" || "linux" === window.siyuan.config.system.os ? " fn__none" : ""}">
-    <div class="fn__flex-1">
-        ${window.siyuan.languages.autoDownloadUpdatePkg}
-        <div class="b3-label__text">${window.siyuan.languages.autoDownloadUpdatePkgTip}</div>
-    </div>
-    <div class="fn__space"></div>
-    <input class="b3-switch fn__flex-center" id="downloadInstallPkg" type="checkbox"${window.siyuan.config.system.downloadInstallPkg ? " checked" : ""}>
-</label>
 <label class="b3-label fn__flex">
     <div class="fn__flex-1">
         ${window.siyuan.languages.about11}
@@ -166,7 +139,6 @@ export const about = {
         <svg><use xlink:href="#iconUpload"></use></svg>${window.siyuan.languages.export}
     </button>
 </div>
-${checkUpdateHTML}
 <div class="fn__flex config__item  b3-label">
     <div class="fn__flex-1">
         ${window.siyuan.languages.about13}
@@ -195,6 +167,12 @@ ${checkUpdateHTML}
         <button id="aboutConfirm" class="b3-button fn__size200 b3-button--outline">${window.siyuan.languages.confirm}</button>
     </div>
 </div>
+<div class="fn__flex b3-label config__item">
+    <div class="fn__flex-1">
+        ${window.siyuan.languages.currentVer} v${Constants.SIYUAN_VERSION}
+        <span id="isInsider"></span>
+    </div>
+</div>
 <div class="b3-label">
     <div class="config-about__logo">
         <img src="/stage/icon.png">
@@ -205,7 +183,6 @@ ${checkUpdateHTML}
         <span style="color:var(--b3-theme-background);font-family: cursive;">会泽百家&nbsp;至公天下</span>
     </div>
     <div class='fn__hr'></div>
-    ${window.siyuan.languages.about1} ${"harmony" === window.siyuan.config.system.container ? " • " + window.siyuan.languages.feedback + " 845765@qq.com" : ""} 
 </div>`;
     },
     bindEvent: () => {
@@ -237,16 +214,6 @@ ${checkUpdateHTML}
         about.element.querySelector("#exportLog").addEventListener("click", () => {
             fetchPost("/api/system/exportLog", {}, (response) => {
                 openByMobile(response.data.zip);
-            });
-        });
-        const updateElement = about.element.querySelector("#checkUpdateBtn");
-        updateElement?.addEventListener("click", () => {
-            if (updateElement.firstElementChild.classList.contains("fn__rotate")) {
-                return;
-            }
-            updateElement.innerHTML = `<svg class="fn__rotate"><use xlink:href="#iconRefresh"></use></svg>${window.siyuan.languages.checkUpdate}`;
-            fetchPost("/api/system/checkUpdate", {showMsg: true}, () => {
-                updateElement.innerHTML = `<svg><use xlink:href="#iconRefresh"></use></svg>${window.siyuan.languages.checkUpdate}`;
             });
         });
         about.element.querySelectorAll('[data-type="open"]').forEach(item => {
@@ -344,12 +311,6 @@ ${checkUpdateHTML}
         lockScreenModeElement.addEventListener("change", () => {
             fetchPost("/api/system/setFollowSystemLockScreen", {lockScreenMode: lockScreenModeElement.checked ? 1 : 0}, () => {
                 window.siyuan.config.system.lockScreenMode = lockScreenModeElement.checked ? 1 : 0;
-            });
-        });
-        const downloadInstallPkgElement = about.element.querySelector("#downloadInstallPkg") as HTMLInputElement;
-        downloadInstallPkgElement.addEventListener("change", () => {
-            fetchPost("/api/system/setDownloadInstallPkg", {downloadInstallPkg: downloadInstallPkgElement.checked}, () => {
-                window.siyuan.config.system.downloadInstallPkg = downloadInstallPkgElement.checked;
             });
         });
         /// #if !BROWSER

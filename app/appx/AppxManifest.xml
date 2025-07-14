@@ -12,7 +12,7 @@
               Version="3.2.0.0"/>
     <Properties>
         <DisplayName>SiYuan</DisplayName>
-        <PublisherDisplayName>云南链滴科技有限公司</PublisherDisplayName>
+        <PublisherDisplayName>思源笔记</PublisherDisplayName>
         <Description>Refactor your thinking</Description>
         <Logo>assets\StoreLogo.png</Logo>
     </Properties>
