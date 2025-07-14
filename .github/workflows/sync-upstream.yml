@@ -1,0 +1,33 @@
+name: Sync Upstream Siyuan Master
+
+on:
+  schedule:
+    - cron: '0 3 1 * *' 
+  workflow_dispatch:     
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v4
+        with:
+          ref: master  # 目标分支
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream
+        run: |
+          git remote add upstream https://github.com/siyuan-note/siyuan.git
+          git fetch upstream
+
+      - name: Merge upstream/master into local master
+        run: |
+          git merge --no-edit upstream/master || echo "No changes to merge"
+
+      - name: Push changes
+        run: |
+          git push origin master
