@@ -12,7 +12,7 @@ jobs:
       - name: Checkout local repository
         uses: actions/checkout@v4
         with:
-          ref: master  # 目标分支
+          ref: src  # 目标分支
 
       - name: Configure Git
         run: |
