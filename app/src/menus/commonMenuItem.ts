@@ -34,143 +34,15 @@ const bindAttrInput = (inputElement: HTMLInputElement, id: string) => {
     });
 };
 
-export const openWechatNotify = (nodeElement: Element) => {
-    const id = nodeElement.getAttribute("data-node-id");
-    const range = getEditorRange(nodeElement);
-    const reminder = nodeElement.getAttribute(Constants.CUSTOM_REMINDER_WECHAT);
-    let reminderFormat = "";
-    if (reminder) {
-        reminderFormat = dayjs(reminder).format("YYYY-MM-DD HH:mm");
-    }
-    const dialog = new Dialog({
-        width: isMobile() ? "92vw" : "50vw",
-        title: window.siyuan.languages.wechatReminder,
-        content: `<div class="b3-dialog__content custom-attr">
-    <div class="fn__flex">
-        <span class="ft__on-surface fn__flex-center" style="text-align: right;white-space: nowrap;width: 100px">${window.siyuan.languages.notifyTime}</span>
-        <div class="fn__space"></div>
-        <input class="b3-text-field fn__flex-1" type="datetime-local" max="9999-12-31 23:59" value="${reminderFormat}">
-    </div>
-    <div class="b3-label__text" style="text-align: center">${window.siyuan.languages.wechatTip}</div>
-</div>
-<div class="b3-dialog__action">
-    <button class="b3-button b3-button--cancel">${window.siyuan.languages.cancel}</button><div class="fn__space"></div>
-    <button class="b3-button b3-button--text">${window.siyuan.languages.remove}</button><div class="fn__space"></div>
-    <button class="b3-button b3-button--text">${window.siyuan.languages.confirm}</button>
-</div>`,
-        destroyCallback() {
-            focusByRange(range);
-        }
-    });
-    dialog.element.setAttribute("data-key", Constants.DIALOG_WECHATREMINDER);
-    const btnsElement = dialog.element.querySelectorAll(".b3-button");
-    btnsElement[0].addEventListener("click", () => {
-        dialog.destroy();
-    });
-    btnsElement[1].addEventListener("click", () => {
-        if (btnsElement[1].getAttribute("disabled")) {
-            return;
-        }
-        btnsElement[1].setAttribute("disabled", "disabled");
-        fetchPost("/api/block/setBlockReminder", {id, timed: "0"}, () => {
-            nodeElement.removeAttribute(Constants.CUSTOM_REMINDER_WECHAT);
-            dialog.destroy();
-        });
-    });
-    btnsElement[2].addEventListener("click", () => {
-        const date = dialog.element.querySelector("input").value;
-        if (date) {
-            if (new Date(date) <= new Date()) {
-                showMessage(window.siyuan.languages.reminderTip);
-                return;
-            }
-            if (btnsElement[2].getAttribute("disabled")) {
-                return;
-            }
-            btnsElement[2].setAttribute("disabled", "disabled");
-            const timed = dayjs(date).format("YYYYMMDDHHmmss");
-            fetchPost("/api/block/setBlockReminder", {id, timed}, () => {
-                nodeElement.setAttribute(Constants.CUSTOM_REMINDER_WECHAT, timed);
-                dialog.destroy();
-            });
-        } else {
-            showMessage(window.siyuan.languages.notEmpty);
-        }
-    });
-};
-
-export const openFileWechatNotify = (protyle: IProtyle) => {
-    fetchPost("/api/block/getDocInfo", {
-        id: protyle.block.rootID
-    }, (response) => {
-        const reminder = response.data.ial[Constants.CUSTOM_REMINDER_WECHAT];
-        let reminderFormat = "";
-        if (reminder) {
-            reminderFormat = dayjs(reminder).format("YYYY-MM-DD HH:mm");
-        }
-        const dialog = new Dialog({
-            width: isMobile() ? "92vw" : "50vw",
-            title: window.siyuan.languages.wechatReminder,
-            content: `<div class="b3-dialog__content custom-attr">
-    <div class="fn__flex">
-        <span class="ft__on-surface fn__flex-center" style="text-align: right;white-space: nowrap;width: 100px">${window.siyuan.languages.notifyTime}</span>
-        <div class="fn__space"></div>
-        <input class="b3-text-field fn__flex-1" type="datetime-local" max="9999-12-31 23:59" value="${reminderFormat}">
-    </div>
-    <div class="b3-label__text" style="text-align: center">${window.siyuan.languages.wechatTip}</div>
-</div>
-<div class="b3-dialog__action">
-    <button class="b3-button b3-button--cancel">${window.siyuan.languages.cancel}</button><div class="fn__space"></div>
-    <button class="b3-button b3-button--text">${window.siyuan.languages.remove}</button><div class="fn__space"></div>
-    <button class="b3-button b3-button--text">${window.siyuan.languages.confirm}</button>
-</div>`
-        });
-        dialog.element.setAttribute("data-key", Constants.DIALOG_WECHATREMINDER);
-        const btnsElement = dialog.element.querySelectorAll(".b3-button");
-        btnsElement[0].addEventListener("click", () => {
-            dialog.destroy();
-        });
-        btnsElement[1].addEventListener("click", () => {
-            fetchPost("/api/block/setBlockReminder", {id: protyle.block.rootID, timed: "0"}, () => {
-                dialog.destroy();
-            });
-        });
-        btnsElement[2].addEventListener("click", () => {
-            const date = dialog.element.querySelector("input").value;
-            if (date) {
-                if (new Date(date) <= new Date()) {
-                    showMessage(window.siyuan.languages.reminderTip);
-                    return;
-                }
-                fetchPost("/api/block/setBlockReminder", {
-                    id: protyle.block.rootID,
-                    timed: dayjs(date).format("YYYYMMDDHHmmss")
-                }, () => {
-                    dialog.destroy();
-                });
-            } else {
-                showMessage(window.siyuan.languages.notEmpty);
-            }
-        });
-    });
-};
-
 export const openFileAttr = (attrs: IObject, focusName = "bookmark", protyle?: IProtyle) => {
     let customHTML = "";
-    let notifyHTML = "";
     let hasAV = false;
     const range = getSelection().rangeCount > 0 ? getSelection().getRangeAt(0) : null;
     Object.keys(attrs).forEach(item => {
         if (Constants.CUSTOM_RIFF_DECKS === item || item.startsWith("custom-sy-")) {
             return;
         }
-        if (item === Constants.CUSTOM_REMINDER_WECHAT) {
-            notifyHTML = `<label class="b3-label b3-label--noborder">
-    ${window.siyuan.languages.wechatReminder}
-    <div class="fn__hr"></div>
-    <input class="b3-text-field fn__block" type="datetime-local" max="9999-12-31 23:59" readonly data-name="${item}" value="${dayjs(attrs[item]).format("YYYY-MM-DD HH:mm")}">
-</label>`;
-        } else if (item.indexOf("custom-av") > -1) {
+        else if (item.indexOf("custom-av") > -1) {
             hasAV = true;
         } else if (item.indexOf("custom") > -1) {
             customHTML += `<label class="b3-label b3-label--noborder">
@@ -230,7 +102,6 @@ export const openFileAttr = (attrs: IObject, focusName = "bookmark", protyle?: I
                 <div class="fn__hr"></div>
                 <textarea style="resize: vertical" spellcheck="${window.siyuan.config.editor.spellcheck}" class="b3-text-field fn__block" placeholder="${window.siyuan.languages.attrMemoTip}" rows="2" data-name="memo">${attrs.memo || ""}</textarea>
             </label>
-            ${notifyHTML}
         </div>
         <div data-type="NodeAttributeView" class="fn__none custom-attr"></div>
         <div data-type="custom" class="fn__none custom-attr">

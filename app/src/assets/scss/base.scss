@@ -1,40 +1,40 @@
-@import "util/keyframes";
-@import "util/mixin";
-@import "util/function";
-@import "business/history";
-@import "component/chip";
-@import "component/slider";
-@import "component/switch";
-@import "util/scroll";
-@import "component/tooltips";
-@import "component/dialog";
-@import "component/button";
-@import "component/snackbar";
-@import "component/form";
-@import "component/text-field";
-@import "component/select";
-@import "component/list";
-@import "business/graph";
-@import "business/layout";
-@import "business/block";
-@import "util/reset";
-@import "component/card";
-@import "component/menu";
-@import "business/color";
-@import "protyle/protyle";
-@import "component/typography";
-@import "pdf/pdf";
-@import "business/config";
-@import "business/search";
-@import "pickr/pcr";
-@import "viewerjs/viewer";
-@import "business/export";
-@import "business/card";
-@import "business/custom";
-@import "business/resize";
-@import "business/av";
-@import "business/emojis";
-@import "component/svg";
+@use "util/keyframes" as *;
+@use "util/function" as *;
+@use "business/history" as *;
+@use "component/chip" as *;
+@use "component/slider" as *;
+@use "component/switch" as *;
+@use "util/scroll" as *;
+@use "component/tooltips" as *;
+@use "component/dialog" as *;
+@use "component/button" as *;
+@use "component/snackbar" as *;
+@use "component/form" as *;
+@use "component/text-field" as *;
+@use "component/select" as *;
+@use "component/list" as *;
+@use "business/graph" as *;
+@use "business/layout" as *;
+@use "business/block" as *;
+@use "util/reset" as *;
+@use "component/card" as *;
+@use "component/menu" as *;
+@use "business/color" as *;
+@use "protyle/protyle" as *;
+@use "component/typography" as *;
+@use "pdf/pdf" as *;
+@use "business/config" as *;
+@use "business/search" as *;
+@use "pickr/pcr" as *;
+@use "viewerjs/viewer" as *;
+@use "business/export" as *;
+@use "business/card" as *;
+@use "business/custom" as *;
+@use "business/resize" as *;
+@use "business/av" as *;
+@use "business/emojis" as *;
+@use "component/svg" as *;
+@use "util/responsive" as *; // 需放置最后，否则 https://github.com/siyuan-note/siyuan/issues/7056
 
 /*
 .status: 2
@@ -384,6 +384,3 @@ html {
     min-height: 18px;
   }
 }
-
-// 需放置最后，否则 https://github.com/siyuan-note/siyuan/issues/7056
-@import "util/responsive";
