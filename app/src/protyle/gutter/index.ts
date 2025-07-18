@@ -94,6 +94,11 @@ export class Gutter {
                         return true;
                     }
                 });
+                if (avElement.querySelector('.block__icon[data-type="av-sort"]')?.classList.contains("block__icon--active")) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return;
+                }
                 const rowElement = avElement.querySelector(`.av__row[data-id="${buttonElement.dataset.rowId}"]`);
                 rowElement.classList.add("av__row--select");
                 rowElement.querySelector(".av__firstcol use").setAttribute("xlink:href", "#iconCheck");
@@ -2343,7 +2348,7 @@ data-type="${type}" data-subtype="${nodeElement.getAttribute("data-subtype")}" d
                 if (type === "NodeListItem" && nodeElement.childElementCount > 3 || type === "NodeHeading") {
                     const fold = nodeElement.getAttribute("fold");
                     foldHTML = `<button class="ariaLabel" data-position="parentW" aria-label="${window.siyuan.languages.fold}" 
-data-type="fold" style="cursor:inherit;"><svg style="width: 10px ${fold && fold === "1" ? "" : ";transform:rotate(90deg)"}"><use xlink:href="#iconPlay"></use></svg></button>`;
+data-type="fold" style="cursor:inherit;"><svg style="width: 10 px${fold && fold === "1" ? "" : ";transform:rotate(90deg)"}"><use xlink:href="#iconPlay"></use></svg></button>`;
                 }
                 if (type === "NodeListItem" || type === "NodeList") {
                     listItem = nodeElement;
